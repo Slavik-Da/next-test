@@ -2,7 +2,7 @@ import {MainLayout} from "../components/MainLayout";
 import Link from "next/link";
 import { useState, useEffect } from 'react'
 
-export default function LatestPosts() {
+export default function LatestPosts({ posts }) {
 
   /*const [posts, setPosts] = useState([])
 
@@ -18,7 +18,7 @@ export default function LatestPosts() {
 */
   return <MainLayout title={'Latest posts'}>
     <h1>Latest post page</h1>
-   {/* <ul>
+   <ul>
       {posts.map(post => (
         <li key={post.id}>
           <Link href={`/posts/[id]`} as={`/posts/${post.id}`}>
@@ -26,22 +26,18 @@ export default function LatestPosts() {
           </Link>
         </li>
       ))}
-    </ul>*/}
-    <pre>{JSON.stringify([], null, 2)}</pre>
+    </ul>
   </MainLayout>
 }
 
 // SEO optimisation
-/*
+
 LatestPosts.getInitialProps = async ({req}) => {
-  if (!req) {
-    return {posts: null}
-  }
   const response = await fetch('https://simple-blog-api.crew.red/posts')
   const posts = await response.json()
   return {
-    posts: posts
+    posts
   }
 
 }
-*/
+
