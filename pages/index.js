@@ -32,7 +32,7 @@ export default function LatestPosts({ posts }) {
 
 // SEO optimisation
 
-LatestPosts.getInitialProps = async ({req}) => {
+LatestPosts.getInitialProps = async ({}) => {
   const response = await fetch('https://simple-blog-api.crew.red/posts')
   const posts = await response.json()
   return {
