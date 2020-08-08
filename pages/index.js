@@ -2,20 +2,28 @@ import {MainLayout} from "../components/MainLayout";
 import Link from "next/link";
 import { useState, useEffect } from 'react'
 
-export default function LatestPosts({ posts }) {
+export default function LatestPosts({ posts: serverPosts }) {
 
-  /*const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState(serverPosts)
 
   useEffect(() => {
     async function load() {
       const response = await fetch('https://simple-blog-api.crew.red/posts')
       const json = await response.json()
       setPosts(json)
-
     }
-    load()
+
+    if (!serverPosts) {
+      load()
+    }
   }, [])
-*/
+
+  if (!posts) {
+    return <MainLayout>
+      <p>Loading...</p>
+    </MainLayout>
+  }
+
   return <MainLayout title={'Latest posts'}>
     <h1>Latest post page</h1>
    <ul>
@@ -32,7 +40,10 @@ export default function LatestPosts({ posts }) {
 
 // SEO optimisation
 
-LatestPosts.getInitialProps = async ({}) => {
+LatestPosts.getInitialProps = async ({ req }) => {
+  if (!req) {
+    return {posts: null}
+  }
   const response = await fetch('https://simple-blog-api.crew.red/posts')
   const posts = await response.json()
   return {
