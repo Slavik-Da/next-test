@@ -1,8 +1,8 @@
 import {MainLayout} from "../components/MainLayout";
 import Link from "next/link";
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 
-export default function LatestPosts({ posts: serverPosts }) {
+export default function LatestPosts({posts: serverPosts}) {
 
   const [posts, setPosts] = useState(serverPosts)
 
@@ -26,7 +26,7 @@ export default function LatestPosts({ posts: serverPosts }) {
 
   return <MainLayout title={'Latest posts'}>
     <h1>Latest post page</h1>
-   <ul>
+    <ul>
       {posts.map(post => (
         <li key={post.id}>
           <Link href={`/posts/[id]`} as={`/posts/${post.id}`}>
@@ -40,7 +40,7 @@ export default function LatestPosts({ posts: serverPosts }) {
 
 // SEO optimisation
 
-LatestPosts.getInitialProps = async ({ req }) => {
+LatestPosts.getInitialProps = async ({req}) => {
   if (!req) {
     return {posts: null}
   }

@@ -3,7 +3,7 @@ import {MainLayout} from "../../components/MainLayout";
 import Link from "next/link";
 import {useRouter} from "next/router";
 
-export default function Post({ post: serverPost }) {
+export default function Post({post: serverPost}) {
 
   const [post, setPost] = useState(serverPost)
   const router = useRouter()
@@ -14,10 +14,11 @@ export default function Post({ post: serverPost }) {
       const data = await response.json()
       setPost(data)
     }
+
     if (!serverPost) {
       load()
     }
-  },[])
+  }, [])
 
   if (!post) {
     return <MainLayout>
@@ -32,7 +33,7 @@ export default function Post({ post: serverPost }) {
     <Link href={'/'}><a>Back to latest posts</a></Link>
   </MainLayout>
 }
-Post.getInitialProps = async ({ query, req }) => {
+Post.getInitialProps = async ({query, req}) => {
   if (!req) {
     return {post: null}
   }
