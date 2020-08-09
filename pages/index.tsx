@@ -36,7 +36,7 @@ export default function LatestPosts({posts: serverPosts}: LatestPostsPageProps) 
     <h1>Latest post page</h1>
     {/*{console.log(posts)}*/}
     <ul>
-      {posts.map(post => (
+      {posts.reverse().map(post => (
         <li key={post.id}>
           <Link href={`/posts/[id]`} as={`/posts/${post.id}`}>
             <a>{post.title}</a>
