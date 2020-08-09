@@ -1,8 +1,15 @@
 import {MainLayout} from "../components/MainLayout";
 import Link from "next/link";
 import {useState, useEffect} from 'react'
+import {MyPost} from "../interfaces/post";
+import {NextPageContext} from "next";
+import {postsAPI} from "../api/api";
 
-export default function LatestPosts({posts: serverPosts}) {
+interface LatestPostsPageProps {
+  posts: MyPost[]
+}
+
+export default function LatestPosts({posts: serverPosts}: LatestPostsPageProps) {
 
   const [posts, setPosts] = useState(serverPosts)
 
@@ -11,6 +18,7 @@ export default function LatestPosts({posts: serverPosts}) {
       const response = await fetch('https://simple-blog-api.crew.red/posts')
       const json = await response.json()
       setPosts(json)
+      /*setPosts(postsAPI.getPosts)*/
     }
 
     if (!serverPosts) {
@@ -26,6 +34,7 @@ export default function LatestPosts({posts: serverPosts}) {
 
   return <MainLayout title={'Latest posts'}>
     <h1>Latest post page</h1>
+    {/*{console.log(posts)}*/}
     <ul>
       {posts.map(post => (
         <li key={post.id}>
@@ -40,12 +49,15 @@ export default function LatestPosts({posts: serverPosts}) {
 
 // SEO optimisation
 
-LatestPosts.getInitialProps = async ({req}) => {
+LatestPosts.getInitialProps = async ({ req }: NextPageContext) => {
   if (!req) {
     return {posts: null}
   }
   const response = await fetch('https://simple-blog-api.crew.red/posts')
-  const posts = await response.json()
+  const posts: MyPost[] = await response.json()
+
+  /*const posts: MyPost[] = postsAPI.getPosts()*/
+
   return {
     posts
   }
